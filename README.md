@@ -55,8 +55,8 @@ Download the latest release from the [Releases](https://github.com/FranTassara/M
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/YOUR_USERNAME/structural-plasticity-analyzer.git
-cd structural-plasticity-analyzer
+git clone https://github.com/FranTassara/MorphoScope.git
+cd MorphoScope
 ```
 
 2. **Create virtual environment** (recommended)
