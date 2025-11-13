@@ -37,7 +37,7 @@ The algorithm is based on the research published in:
 
 ### Option 1: Standalone Executable (Windows)
 
-Download the latest release from the [Releases](https://github.com/yourusername/neuronal-plasticity-analysis/releases) page:
+Download the latest release from the [Releases](https://github.com/FranTassara/MorphoScope/releases/tag/v1.0.0) page:
 ```bash
 # Download Morphoscope.exe
 # Double-click to run - no installation needed!
