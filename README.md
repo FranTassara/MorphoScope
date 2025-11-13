@@ -2,7 +2,7 @@
 
 A Python-based GUI application for quantifying structural plasticity in neuronal projections, implementing the methodology from Petsakou et al., 2015 (*Cell*).
 
-## 📋 Overview
+## Overview
 
 This tool provides automated 3D quantification of neuronal structural plasticity from confocal microscopy images. It calculates:
 - **3D spread** measurements (X, Y, Z axes)
@@ -13,7 +13,7 @@ This tool provides automated 3D quantification of neuronal structural plasticity
 The algorithm is based on the research published in:
 > **Petsakou A, Sapsis T & Blau J (2015).** *Circadian rhythms in Rho1 activity regulate neuronal plasticity and network hierarchy.* Cell, 162(4):823-835.
 
-## ✨ Features
+## Features
 
 - **Multi-format support**: TIFF, CZI, and JPEG image stacks
 - **Interactive ROI selection**: Polygon-based region of interest drawing
@@ -22,7 +22,7 @@ The algorithm is based on the research published in:
 - **Batch processing**: Process multiple images sequentially
 - **CSV export**: Export all measurements to spreadsheet-compatible format
 
-## 🖼️ Screenshots
+## Screenshots
 
 ### Main Interface
 *[Add screenshot of your main interface]*
@@ -33,7 +33,7 @@ The algorithm is based on the research published in:
 ### Results Export
 *[Add screenshot of results table]*
 
-## 📦 Installation
+## Installation
 
 ### Option 1: Standalone Executable (Windows)
 
@@ -228,16 +228,16 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👥 Authors
+## Authors
 
 - **Original Algorithm**: Afroditi Petsakou, Themistoklis P. Sapsis, Justin Blau
 - **Python Implementation**: [Francisco Joaquín Tassara]
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Original MATLAB implementation by Petsakou et al. (2015)
 - Open-source Python scientific computing community
