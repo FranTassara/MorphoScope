@@ -35,13 +35,23 @@ The algorithm is based on the research published in:
 
 ## 📦 Installation
 
-### Prerequisites
+### Option 1: Standalone Executable (Windows)
+
+Download the latest release from the [Releases](https://github.com/yourusername/neuronal-plasticity-analysis/releases) page:
+```bash
+# Download Morphoscope.exe
+# Double-click to run - no installation needed!
+```
+
+### Option 2: Python Installation
+
+#### Prerequisites
 
 - Python 3.8 or higher
 - PySide6 (Qt for Python)
 - Scientific computing libraries
 
-### Setup
+#### Setup
 
 1. **Clone the repository**
 ```bash
@@ -62,47 +72,33 @@ pip install -r requirements.txt
 
 4. **Run the application**
 ```bash
-python main.py
+python MorphoScope.py
 ```
 
-## 📚 Dependencies
-
-```
-PySide6>=6.5.0
-numpy>=1.24.0
-scipy>=1.10.0
-matplotlib>=3.7.0
-tifffile>=2023.0.0
-pylibCZIrw>=3.0.0
-scikit-image>=0.20.0
-pyqtgraph>=0.13.0
-shapely>=2.0.0
-```
-
-## 🚀 Quick Start
+## Quick Start
 
 ### Basic Workflow
 
 1. **Load Images**: Click "Load Image" and select your confocal stack (TIFF/CZI)
 2. **Set Voxel Dimensions**: Enter X, Y, Z voxel sizes in micrometers
-3. **Draw ROI**: Click "Select ROI" and draw polygon around region of interest
-4. **Apply Filters** (optional): 
+3. **Apply Filters** (optional): 
    - Gaussian blur for noise reduction
    - Median filter for salt-and-pepper noise
    - Threshold to remove background
+4. **Draw ROI**: Click "Select ROI" and draw polygon around region of interest
 5. **Select Z-Range**: Choose which slices to analyze (default: all)
 6. **Process**: Click "Process" to run the analysis
 7. **Export Results**: Save measurements to CSV file
 
 ### Image Requirements
 
-- **Format**: Confocal Z-stacks (TIFF, CZI, or series of JPEGs)
+- **Format**: Confocal Z-stacks (TIFF, CZI, or LSM)
 - **Recommended resolution**: 1024×1024 pixels
 - **Bit depth**: 8-bit or 16-bit
 - **Z-step size**: Consistent spacing (typically 1 μm)
 - **Imaging**: Single channel or multi-channel (specify channel for analysis)
 
-## 📖 Methodology
+## Methodology
 
 ### Algorithm Overview
 
@@ -114,50 +110,98 @@ The analysis pipeline follows these steps:
    - Extract user-defined ROI
 
 2. **PCA-Based Rotation**
-   - Calculate centroid of Z-projection
+   - Calculate centroid of intensity-weighted projection
    - Compute covariance matrix
-   - Rotate image to align maximum spread with X-axis
+   - Rotate image to align maximum spread with X-axis (objective coordinate system)
 
-3. **Local Spread Calculation**
+3. **Mean 3D Curve Calculation**
    - For each X position, calculate intensity-weighted mean Y and Z positions
-   - Compute variance around these means
+   - This defines the "spine" of the projection
 
-4. **Global Spread Metrics**
-   - X-spread: Standard deviation of X distribution
-   - Y-spread: Weighted average of local Y variances
-   - Z-spread: Weighted average of local Z variances
-   - 3D spread: Product of X, Y, and Z spreads
+4. **Local Spread Calculation**
+   - For each X position, compute typical deviation (weighted variance) in Y and Z
+   - Weighting by fluorescence intensity (Cf) ensures bright regions contribute more
 
-5. **Additional Metrics**
-   - Axonal volume: Sum of all intensity values
-   - Fluorescence: Normalized intensity per unit area
+5. **Global Spread Metrics**
+   - X-spread: Intensity-weighted standard deviation along X-axis
+   - Y-spread: Weighted average of local Y typical deviations
+   - Z-spread: Weighted average of local Z typical deviations
+   - **3D spread**: Product of X, Y, and Z spreads (σ̄ₓ × σ̄ᵧ × σ̄ᵧ)
+
+6. **Additional Metrics**
+   - **Axonal volume (M)**: Sum of all intensity values (total fluorescent material)
+   - **Fluorescence**: [COMPLETAR]
 
 ### Mathematical Formulation
 
+Where Cf(x, y, z) represents fluorescence intensity at each voxel.
+
 #### 3D Mean Curve
-For each x position, the mean Y and Z coordinates are:
+
+For each x position xⱼ, the intensity-weighted mean Y and Z coordinates define the central path:
 
 $$P_y(x_j) = \frac{\sum_i y_i \cdot C_f(x_j, y_i, z_i)}{\sum_i C_f(x_j, y_i, z_i)}$$
 
 $$P_z(x_j) = \frac{\sum_i z_i \cdot C_f(x_j, y_i, z_i)}{\sum_i C_f(x_j, y_i, z_i)}$$
 
-#### Local Spreads
-The local standard deviations at each x position:
+This 3D curve (x, Py(x), Pz(x)) represents the "backbone" of the axonal projection.
+
+#### Local Spreads (Typical Deviations)
+
+The local typical deviations measure spread around the mean curve at each x position:
 
 $$\sigma_y(x_j) = \sqrt{\frac{\sum_i (y_i - P_y(x_j))^2 \cdot C_f(x_j, y_i, z_i)}{\sum_i C_f(x_j, y_i, z_i)}}$$
 
 $$\sigma_z(x_j) = \sqrt{\frac{\sum_i (z_i - P_z(x_j))^2 \cdot C_f(x_j, y_i, z_i)}{\sum_i C_f(x_j, y_i, z_i)}}$$
 
+These are intensity-weighted standard deviations at each X slice.
+
 #### Global Spreads
-Weighted averages across all x positions:
+
+**Y-axis and Z-axis global spreads** - weighted averages of local spreads:
 
 $$\bar{\sigma}_y = \frac{\sum_i \sigma_y(x_i) \cdot C_f(x_i, y_i, z_i) \cdot \delta x \cdot \delta y \cdot \delta z}{M}$$
 
 $$\bar{\sigma}_z = \frac{\sum_i \sigma_z(x_i) \cdot C_f(x_i, y_i, z_i) \cdot \delta x \cdot \delta y \cdot \delta z}{M}$$
 
-Where M is the total axonal volume (sum of all intensity values).
+**X-axis global spread** - typical deviation of the entire distribution along X:
 
-## 📊 Output Format
+$$\bar{\sigma}_x = \sqrt{\frac{\sum_i (x_i - m_x)^2 \cdot C_f(x_i, y_i, z_i) \cdot \delta x \cdot \delta y \cdot \delta z}{M}}$$
+
+where the intensity-weighted center of mass along X is:
+
+$$m_x = \frac{\sum_i x_i \cdot C_f(x_i, y_i, z_i) \cdot \delta x \cdot \delta y \cdot \delta z}{M}$$
+
+**Axonal Volume (M)** - total fluorescent material:
+
+$$M = \sum_i C_f(x_i, y_i, z_i) \cdot \delta x \cdot \delta y \cdot \delta z$$
+
+**3D Spread** - final metric combining all three axes:
+
+$$\text{3D Spread} = \bar{\sigma}_x \times \bar{\sigma}_y \times \bar{\sigma}_z$$
+
+Where:
+- δx, δy, δz are voxel dimensions (spacing between points)
+- Cf(x, y, z) is fluorescence intensity at each voxel
+- M is the total axonal volume (sum of all intensities × voxel volume)
+
+#### Fluorescence Density [COMPLETAR]
+
+$$\text{Fluorescence} = \frac{M}{V_{cuboid}}$$
+
+where Vcuboid is the volume of the bounding box containing the ROI.
+
+### Key Differences from Standard Metrics
+
+⚠️ **Important**: These are not simple standard deviations:
+
+1. **Intensity-weighted**: Bright regions contribute more to the measurements
+2. **Asymmetric treatment**: X-axis uses global variance, while Y and Z use averaged local variances
+3. **Curved structures**: The 3D mean curve accounts for non-linear axonal paths
+4. **Normalized by mass**: Global spreads are normalized by total fluorescence (M)
+
+This approach is specifically designed for **curved, non-uniform neuronal projections** where simple bounding box or centroid-based measurements would be inaccurate.
+## Output Format
 
 Results are exported to CSV with the following columns:
 
@@ -173,46 +217,8 @@ Results are exported to CSV with the following columns:
 | Fluorescence | Normalized fluorescence | pixels / μm² |
 | Observation | User notes | - |
 
-## 🔬 Original MATLAB Implementation
 
-This Python implementation modernizes the original MATLAB script from Petsakou et al. (2015) with:
-- ✅ User-friendly GUI
-- ✅ No hardcoded filters (user-controlled)
-- ✅ Native support for modern file formats (CZI, multi-page TIFF)
-- ✅ Batch processing capabilities
-- ✅ Improved error handling and logging
-
-The original `spread.m` MATLAB script is included in the `/matlab` directory for reference.
-
-## 📝 Citation
-
-If you use this tool in your research, please cite the original methodology:
-
-```bibtex
-@article{petsakou2015circadian,
-  title={Circadian rhythms in Rho1 activity regulate neuronal plasticity and network hierarchy},
-  author={Petsakou, Afroditi and Sapsis, Themistoklis P and Blau, Justin},
-  journal={Cell},
-  volume={162},
-  number={4},
-  pages={823--835},
-  year={2015},
-  publisher={Elsevier}
-}
-```
-
-And optionally cite this software:
-
-```bibtex
-@software{structural_plasticity_analyzer,
-  title={Structural Plasticity Analyzer},
-  author={YOUR_NAME},
-  year={2025},
-  url={https://github.com/YOUR_USERNAME/structural-plasticity-analyzer}
-}
-```
-
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request. For major changes:
 
@@ -229,26 +235,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👥 Authors
 
 - **Original Algorithm**: Afroditi Petsakou, Themistoklis P. Sapsis, Justin Blau
-- **Python Implementation**: [Your Name]
+- **Python Implementation**: [Francisco Joaquín Tassara]
 
 ## 🙏 Acknowledgments
 
 - Original MATLAB implementation by Petsakou et al. (2015)
-- NYU Biology Department for the foundational research
 - Open-source Python scientific computing community
 
-## 📧 Contact
-
-For questions or support, please:
-- Open an issue on GitHub
-- Email: [your.email@example.com]
-
-## 🔗 Related Resources
-
-- [Original Cell paper (2015)](https://doi.org/10.1016/j.cell.2015.07.010)
-- [Circadian clock research at NYU](https://as.nyu.edu/biology.html)
-- [Python image processing with scikit-image](https://scikit-image.org/)
-
 ---
-
-**Note**: This is a research tool. Results should be validated against the original methodology and appropriate controls.
