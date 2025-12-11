@@ -1,5 +1,7 @@
 # MorphoScope
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17901990.svg)](https://doi.org/10.5281/zenodo.17901990)
+
 A Python-based GUI application for quantifying structural plasticity in neuronal projections, implementing the methodology from Petsakou et al., 2015 (*Cell*).
 
 ## Overview
