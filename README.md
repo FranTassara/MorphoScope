@@ -1,6 +1,7 @@
 # MorphoScope
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17901990.svg)](https://doi.org/10.5281/zenodo.17901990)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A Python-based GUI application for quantifying structural plasticity in neuronal projections, implementing the methodology from Petsakou et al., 2015 (*Cell*).
 
@@ -25,17 +26,6 @@ The algorithm is based on the research published in:
 - **Dual-channel analysis**: Separate channels for morphology and protein quantification
 - **Batch processing**: Process multiple images sequentially
 - **CSV export**: Export all measurements to spreadsheet-compatible format
-
-## Screenshots
-
-### Main Interface
-*[Add screenshot of your main interface]*
-
-### ROI Selection
-*[Add screenshot showing ROI polygon drawing]*
-
-### Results Export
-*[Add screenshot of results table]*
 
 ## Installation
 
