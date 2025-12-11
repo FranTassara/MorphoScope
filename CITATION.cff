@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+title: "MorphoScope: A Python tool for quantifying structural plasticity in neuronal projections"
+message: "If you use this software, please cite it using the metadata from this file."
+type: software
+authors:
+  - family-names: Tassara
+    given-names: Francisco Joaquín
+    orcid: https://orcid.org/0009-0003-3549-5672
+version: 1.0.0
+date-released: 2025-12-11
+doi: 10.5281/zenodo.17901990
+url: https://github.com/FranTassara/MorphoScope
+repository-code: https://github.com/FranTassara/MorphoScope
+license: MIT
+keywords:
+  - neuroscience
+  - structural plasticity
+  - confocal microscopy
+  - image analysis
+  - drosophila
+  - circadian rhythms
+  - 3D quantification
+abstract: >-
+  MorphoScope is a Python-based GUI application for quantifying 
+  structural plasticity in neuronal projections from 3D confocal 
+  microscopy images. It implements the methodology described in 
+  Petsakou et al., 2015 (Cell), providing automated calculation of 
+  3D spread metrics, axonal volume, geometric volume, and 
+  fluorescence density with PCA-based rotation for objective 
+  axis alignment.
+references:
+  - type: article
+    authors:
+      - family-names: Petsakou
+        given-names: Afroditi
+      - family-names: Sapsis
+        given-names: Themistoklis P.
+      - family-names: Blau
+        given-names: Justin
+    title: "Circadian rhythms in Rho1 activity regulate neuronal plasticity and network hierarchy"
+    journal: Cell
+    volume: 162
+    issue: 4
+    start: 823
+    end: 835
+    year: 2015
+    doi: 10.1016/j.cell.2015.07.010
