@@ -185,11 +185,27 @@ Where:
 - Cf(x, y, z) is fluorescence intensity at each voxel
 - M is the total axonal volume (sum of all intensities × voxel volume)
 
-#### Fluorescence Density [COMPLETAR]
+#### Fluorescence Density
 
-$$\text{Fluorescence} = \frac{M}{V_{cuboid}}$$
+The fluorescence metric quantifies the concentration of fluorescent material within the projection. This implementation uses a maximum intensity Z-projection approach to minimize background contribution:
 
-where Vcuboid is the volume of the bounding box containing the ROI.
+$$\text{Fluorescence}_{px} = \frac{\sum_{x,y} \max_z(C_f(x,y,z))}{N_{occupied}}$$
+
+$$\text{Fluorescence}_{\mu m^2} = \frac{\sum_{x,y} \max_z(C_f(x,y,z))}{N_{occupied} \cdot \delta x \cdot \delta y}$$
+
+Where:
+- $\max_z(C_f(x,y,z))$ is the maximum intensity Z-projection
+- $N_{occupied}$ is the number of non-zero pixels in the projection
+- $\delta x, \delta y$ are voxel dimensions in µm
+
+**Note**: This differs from the original MATLAB implementation which normalized by the full ROI cuboid volume:
+
+$$\text{Fluorescence}_{original} = \frac{M}{A_{ROI} \cdot n_z \cdot \delta z \cdot (\delta x \cdot \delta y)}$$
+
+The current approach provides a more robust measure that:
+1. Uses maximum projection to reduce background contributions
+2. Counts only occupied pixels, making it independent of ROI shape
+3. Reports both per-pixel (AU/pixel) and per-area (AU/µm²) values
 
 ### Key Differences from Standard Metrics
 
