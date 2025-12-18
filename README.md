@@ -205,7 +205,8 @@ Where:
 **Note**: This differs from the original MATLAB implementation which normalized by the full ROI cuboid volume. The current approach provides a more robust measure that:
 1. Uses maximum projection to reduce background contributions
 2. Counts only occupied pixels, making it independent of ROI shape
-3. Reports both per-pixel (AU/pixel) and per-area (AU/µm²) values
+3. Uses the Triangle thresholding method to distinguish true signal from low-level background values.
+4. Reports both per-pixel (AU/pixel) and per-area (AU/µm²) values
 
 #### Symbol Reference
 
@@ -217,7 +218,8 @@ Where:
 | P_y, P_z | Intensity-weighted mean positions (3D curve) |
 | σ_y, σ_z | Local typical deviations at each x position |
 | σ̄_x, σ̄_y, σ̄_z | Global spreads along each axis |
-| N_occupied | Number of non-zero voxels |
+| N_occupied | Number of pixels belonging to the signal mask |
+| $\Omega$ | The region of the projection considered as "signal" (intensity > threshold) |
 
 ### Key Differences from Standard Metrics
 
