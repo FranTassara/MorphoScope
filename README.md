@@ -190,15 +190,16 @@ Where N_occupied is the number of non-zero voxels. This metric quantifies the ac
 
 #### Fluorescence Density
 
-The fluorescence metric quantifies the concentration of fluorescent material within the projection. This implementation uses a maximum intensity Z-projection approach:
+The fluorescence metric quantifies the concentration of fluorescent material within the projection. This implementation uses a maximum intensity Z-projection approach combined with automatic background thresholding:
 
-$$\text{Fluorescence}_{px} = \frac{\sum_{x,y} \max_z(C_f(x,y,z))}{N_{occupied}}$$
+$$\text{Fluorescence}_{px} = \frac{\sum_{(x,y) \in \Omega} \max_z(C_f(x,y,z))}{N_{occupied}}$$
 
-$$\text{Fluorescence}_{\mu m^2} = \frac{\sum_{x,y} \max_z(C_f(x,y,z))}{N_{occupied} \cdot \delta x \cdot \delta y}$$
+$$\text{Fluorescence}_{\mu m^2} = \frac{\sum_{(x,y) \in \Omega} \max_z(C_f(x,y,z))}{N_{occupied} \cdot \delta x \cdot \delta y}$$
 
 Where:
 - max_z(C_f(x,y,z)) is the maximum intensity Z-projection
-- N_occupied is the number of non-zero pixels in the projection
+- $\Omega$ is the set of pixels where intensity > $T_{triangle}$ (Triangle threshold).
+- N_occupied is the number of pixels in $\Omega$ (pixels above threshold).
 - δx, δy are voxel dimensions in µm
 
 **Note**: This differs from the original MATLAB implementation which normalized by the full ROI cuboid volume. The current approach provides a more robust measure that:
@@ -260,7 +261,7 @@ Results are exported to CSV with the following columns:
 
 - **Geometric Volume**: Actual physical space occupied. Independent of fluorescence intensity.
 
-- **Fluorescence Density**: Concentration of fluorescent signal. Useful for ensuring comparable staining between experimental and control samples.
+- **Fluorescence Density**: Concentration of fluorescent signal. Useful for ensuring comparable staining (PDF) between experimental and control samples.
 
 ## Contributing
 
