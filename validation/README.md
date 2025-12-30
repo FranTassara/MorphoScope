@@ -64,6 +64,17 @@ axonal_volume/:
   - Larger structure: higher axonal volume
   - Shell vs solid: similar spread, different volume
 
+## Summary
+
+The synthetic volume validation confirms that MorphoScope's spread quantification algorithm:
+
+1. **Scales correctly** with structure size
+2. **Detects anisotropy** in the correct axes
+3. **Is independent** of fluorescence intensity
+4. **Is rotation-invariant** thanks to PCA alignment
+5. **Captures fasciculation** with high sensitivity (up to 12.8× fold change in Y×Z)
+
+These properties make the algorithm suitable for quantifying structural plasticity in neuronal projections, as described in [Petsakou et al., 2015 (Cell)](https://doi.org/10.1016/j.cell.2015.07.010).
 
 Real Volumes for MorphoScope Validation
 =============================================
