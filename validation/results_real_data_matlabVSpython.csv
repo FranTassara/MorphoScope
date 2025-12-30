@@ -1,0 +1,9 @@
+Image filename,Spread x [pixel],Spread y [pixel],Spread z [pixel],Spread x*y [pixel2],Spread x*y*z [pixel3],Spread x [um],Spread y [um],Spread z [um],Spread x*y [um2],Spread x*y*z [um3],Axonal Volume (integrated intensity),Geometric volume [um3],Fluorescence_px [AU/pixel],Fluorescence_um [AU/um],Observation
+N5_pdf-RFP aRFPrb CY3 aPDFrat CY5 40x ZT2 C10 hizq.czi,94.32,36.54,1.46,3446.76,5037.66,8.68,3.36,1.46,29.17,42.64,2606984,452.4,0,0,""""""
+N5_pdf-RFP aRFPrb CY3 aPDFrat CY5 40x ZT2 C10 hizq MATLAB,94.7053,37.9772,1.4958,,,,,,,,2.75E+04,,,,
+N5_pdf-RFP aRFPrb CY3 aPDFrat CY5 40x ZT2 C31 hder.czi,93.93,32.95,1.08,3094.63,3355.11,8.64,3.03,1.08,26.19,28.4,2373752,462.85,0,0,""""""
+N5_pdf-RFP aRFPrb CY3 aPDFrat CY5 40x ZT2 C31 hder MATLAB,93.572,33.4647,1.0561,,,,,,,,2.38E+04,,,,
+N5_pdf-RFP aRFPrb CY3 aPDFrat CY5 40x ZT14 C17 hizq.czi,102.86,20.6,0.85,2118.84,1803.27,9.46,1.9,0.85,17.93,15.26,1779307,300.97,0,0,""""""
+N5_pdf-RFP aRFPrb CY3 aPDFrat CY5 40x ZT14 C17 hizq MATLAB,102.2712,20.8208,0.8549,,,,,,,,2.10E+04,,,,
+N5_pdf-RFP aRFPrb CY3 aPDFrat CY5 40x ZT14 C18 hder.czi,65.45,27.34,1.16,1789.39,2069.61,6.02,2.52,1.16,15.15,17.52,1783458,340.39,0,0,""""""
+N5_pdf-RFP aRFPrb CY3 aPDFrat CY5 40x ZT14 C18 hder MATLAB,65.4737,25.9029,1.1671,,,,,,,,2.65E+04,,,,
