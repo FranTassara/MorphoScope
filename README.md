@@ -29,13 +29,24 @@ The algorithm is based on the research published in:
 
 ## Installation
 
-### Option 1: Standalone Executable (Windows)
+### Option 1: Standalone Executable
+
+**Windows**
 
 Download the latest release from the [Releases](https://github.com/FranTassara/MorphoScope/releases/tag/v1.0.0) page:
 ```bash
 # Download Morphoscope.exe
 # Double-click to run - no installation needed!
 ```
+
+**macOS (Apple Silicon only — M1/M2/M3/M4)**
+
+Download MorphoScope-macOS-arm64.zip from the same [Releases](https://github.com/FranTassara/MorphoScope/releases/tag/v1.0.0) page, then:
+
+1. Unzip it (double-click the .zip, or unzip MorphoScope-macOS-arm64.zip).
+2. The first time you open MorphoScope.app, macOS will warn that it can't verify the developer (the app isn't notarized by Apple). To open it anyway: Right-click (or Control-click) MorphoScope.app → Open → confirm Open in the dialog. If that doesn't show an "Open" option, go to System Settings → Privacy & Security, scroll down, and look for a message about MorphoScope being blocked, then click Open Anyway.
+3. After this first-time confirmation, it opens normally with a regular double-click.
+Note: this build only runs on Apple Silicon Macs (arm64). Intel Macs are not currently supported.
 
 ### Option 2: Python Installation
 
